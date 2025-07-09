@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🧹 Lint
+        run: npm run lint
+
+      - name: 🧪 Run Unit Tests (Vitest)
+        run: npm run test -- --run
+
+      - name: 🧪 Run E2E Tests (Cypress)
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run dev
+          wait-on: "http://localhost:3000"
+          wait-on-timeout: 60
+
+      - name: 🛠 Build
+        run: npm run build
