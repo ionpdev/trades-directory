@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import {
   useLazyQuery,
   type LazyQueryHookOptions,
@@ -21,28 +21,33 @@ export function useLazyQueryWithMSW<
     options
   );
 
+  // Use a ref to store the latest executeQuery to avoid recreating the callback
+  const executeQueryRef = useRef(executeQuery);
+  executeQueryRef.current = executeQuery;
+
   // Return a wrapped execute function that checks MSW readiness
-  const executeWhenReady = (
-    executeOptions?: Parameters<typeof executeQuery>[0]
-  ) => {
-    if (isReady) {
-      return executeQuery(executeOptions);
-    } else {
-      console.warn("[MSW] Query attempted before MSW is ready, deferring...");
-      // Return a promise that resolves when MSW is ready
-      return new Promise<void>((resolve) => {
-        const checkReady = () => {
-          if (isReady) {
-            executeQuery(executeOptions);
-            resolve();
-          } else {
-            setTimeout(checkReady, 100); // Check every 100ms
-          }
-        };
-        checkReady();
-      });
-    }
-  };
+  const executeWhenReady = useCallback(
+    (executeOptions?: Parameters<typeof executeQuery>[0]) => {
+      if (isReady) {
+        return executeQueryRef.current(executeOptions);
+      } else {
+        console.warn("[MSW] Query attempted before MSW is ready, deferring...");
+        // Return a promise that resolves when MSW is ready
+        return new Promise<void>((resolve) => {
+          const checkReady = () => {
+            if (isReady) {
+              executeQueryRef.current(executeOptions);
+              resolve();
+            } else {
+              setTimeout(checkReady, 100); // Check every 100ms
+            }
+          };
+          checkReady();
+        });
+      }
+    },
+    [isReady]
+  ); // Only depend on isReady
 
   return [executeWhenReady, result] as const;
 }
@@ -67,11 +72,16 @@ export function useQueryOnMSWReady<
     options
   );
 
-  useEffect(() => {
+  // Memoize the execute function to prevent infinite loops
+  const memoizedExecuteQuery = useCallback(() => {
     if (isReady) {
       executeQuery(executeOptions);
     }
   }, [isReady, executeQuery, executeOptions]);
+
+  useEffect(() => {
+    memoizedExecuteQuery();
+  }, [memoizedExecuteQuery]);
 
   return [executeQuery, result] as const;
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   GET_ALL_TRADESPEOPLE,
   GET_TRADESPEOPLE_BY_SEARCH,
@@ -29,28 +30,163 @@ const tradeTypes = [
   "Electrician",
   "Plumber",
   "Builder",
-  "Painter",
   "Carpenter",
-  "Gardener",
-  "Roofer",
   "Gas Engineer",
+  "Painter",
+  "Tiler",
+  "Roofer",
+  "Gardener",
+  "Locksmith",
+  "Flooring Specialist",
+  "Plasterer",
+  "Window Cleaner",
+  "Handyman",
+  "Decorator",
+  "Heating Engineer",
+  "Appliance Repair",
+  "Bathroom Fitter",
+  "Kitchen Fitter",
+  "Driveway Specialist",
+  "Pest Control",
+  "Carpet Fitter",
+  "Chimney Sweep",
+  "Fence Installer",
 ];
 
-// Common postcode areas in London
+// Common postcode areas in London and surrounding areas
 const postcodeAreas = [
   "SW1A",
-  "W1A",
-  "E1",
-  "N1",
-  "SE1",
-  "NW1",
-  "EC1",
-  "WC1",
+  "SW1B",
   "SW2",
-  "W2",
-];
+  "SW3",
+  "SW4",
+  "SW5A",
+  "SW5B",
+  "SW6",
+  "SW7",
+  "SW8",
+  "SW9",
+  "SW10A",
+  "SW10B",
+  "SW11",
+  "SW12",
+  "SW13",
+  "SW14",
+  "SW15A",
+  "SW15B",
+  "SW16",
+  "SW17",
+  "SW18",
+  "SW19",
+  "SW20A",
+  "SW20B",
+  "SW21",
+  "SW22",
+  "W1A",
+  "W1B",
+  "W2A",
+  "W2B",
+  "W3",
+  "W4",
+  "W5",
+  "W6",
+  "W8A",
+  "W8B",
+  "W9",
+  "W10",
+  "W11",
+  "W12",
+  "E1A",
+  "E1B",
+  "E2A",
+  "E2B",
+  "E3",
+  "E4",
+  "E5",
+  "E6",
+  "E14",
+  "E15",
+  "N1A",
+  "N1B",
+  "N2",
+  "N3",
+  "N4A",
+  "N4B",
+  "N5",
+  "N6",
+  "N7",
+  "N8",
+  "SE1A",
+  "SE1B",
+  "SE2",
+  "SE3",
+  "SE4",
+  "SE5",
+  "SE10A",
+  "SE10B",
+  "SE11",
+  "SE12",
+  "SE13",
+  "SE14",
+  "SE22A",
+  "SE22B",
+  "SE23",
+  "SE24",
+  "SE25",
+  "SE26",
+  "NW1",
+  "NW2",
+  "NW3A",
+  "NW3B",
+  "NW4",
+  "NW5",
+  "NW6",
+  "NW7",
+  "NW10A",
+  "NW10B",
+  "NW11",
+  "NW12",
+  "EC1A",
+  "EC1B",
+  "EC2",
+  "EC3",
+  "WC1",
+  "WC2",
+  "HA1A",
+  "HA1B",
+  "HA2",
+  "HA3",
+  "HA4",
+  "HA5",
+  "BR1A",
+  "BR1B",
+  "BR2",
+  "BR3",
+  "BR4",
+  "BR5",
+  "DA1A",
+  "DA1B",
+  "DA2",
+  "DA3",
+  "DA4",
+  "DA5",
+  "TN1A",
+  "TN1B",
+  "TN2",
+  "TN3",
+  "TN4",
+  "KT1A",
+  "KT1B",
+  "KT2",
+  "KT3",
+  "KT4",
+  "KT5",
+  "CR0",
+  "CR2",
+].sort();
 
 export default function SearchPage() {
+  const router = useRouter();
   const [trade, setTrade] = useState("");
   const [postcode, setPostcode] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
@@ -238,7 +374,8 @@ export default function SearchPage() {
             {tradespeople.map((person: Tradesperson) => (
               <Card
                 key={person.id}
-                className="hover:shadow-lg transition-shadow"
+                className="hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={() => router.push(`/tradesperson/${person.id}`)}
               >
                 <CardContent className="p-6 space-y-4">
                   <div className="flex items-start justify-between">
@@ -286,10 +423,25 @@ export default function SearchPage() {
 
                   {/* Action Buttons */}
                   <div className="flex gap-2 pt-2">
-                    <Button size="sm" className="flex-1">
+                    <Button
+                      size="sm"
+                      className="flex-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push(`/tradesperson/${person.id}`);
+                      }}
+                    >
                       Contact
                     </Button>
-                    <Button size="sm" variant="outline" className="flex-1">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push(`/tradesperson/${person.id}`);
+                      }}
+                    >
                       View Profile
                     </Button>
                   </div>
