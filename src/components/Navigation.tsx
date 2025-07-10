@@ -25,7 +25,7 @@ export function Navigation() {
               </span>
             </div>
             <span className="text-xl font-bold text-foreground">
-              TradesDirectory
+              TradesDirectory - Demo for CT
             </span>
           </div>
 
