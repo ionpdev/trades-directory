@@ -3,6 +3,8 @@
 import { useParams, useRouter } from "next/navigation";
 import { useLazyQueryWithMSW } from "@/hooks/useMSWQuery";
 import { GET_TRADESPERSON_BY_ID } from "@/lib/apollo/queries";
+import { useAuth } from "@/contexts/AuthContext";
+import { useFavorites } from "@/contexts/FavoritesContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +16,7 @@ import {
   MapPin,
   Star,
   CheckCircle,
+  Heart,
 } from "lucide-react";
 import type {
   GetTradespersonResponse,
@@ -24,6 +27,8 @@ import { useEffect, useCallback } from "react";
 export default function TradespersonPage() {
   const params = useParams();
   const router = useRouter();
+  const { user } = useAuth();
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const id = params?.id as string;
 
   const [fetchTradesperson, { data, loading, error }] = useLazyQueryWithMSW<
@@ -84,6 +89,20 @@ export default function TradespersonPage() {
   }
 
   const tradesperson = data.tradesperson;
+  const isUserFavorite = isFavorite(id);
+
+  const handleFavoriteToggle = () => {
+    if (!user) {
+      router.push("/auth/signin");
+      return;
+    }
+
+    if (isUserFavorite) {
+      removeFavorite(id);
+    } else {
+      addFavorite(id);
+    }
+  };
 
   return (
     <div className="bg-background">
@@ -131,6 +150,22 @@ export default function TradespersonPage() {
                       </div>
                     </div>
                   </div>
+                  {user && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleFavoriteToggle}
+                      className="ml-2"
+                    >
+                      <Heart
+                        className={`w-5 h-5 ${
+                          isUserFavorite
+                            ? "fill-red-500 text-red-500"
+                            : "text-muted-foreground"
+                        }`}
+                      />
+                    </Button>
+                  )}
                 </div>
               </CardHeader>
               <CardContent className="space-y-6">
