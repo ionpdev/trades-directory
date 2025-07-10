@@ -257,14 +257,6 @@ npm run build
 # Serve static files from 'out' directory
 ```
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/new-feature`
-3. Commit changes: `git commit -am 'Add new feature'`
-4. Push to branch: `git push origin feature/new-feature`
-5. Submit a pull request
-
 ## Development Guidelines
 
 ### Code Style

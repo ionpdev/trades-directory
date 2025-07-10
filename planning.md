@@ -3,7 +3,7 @@
 - **Next.js (App Router)**: Best modern choice for React apps - allows routing, layouts, and server components if needed.
 - **TypeScript**: Mandatory for maintainability and type safety in a team environment.
 - **Tailwind CSS + SHADCN Components**: Great for rapid UI development and aligns with modern frontend stacks.
-- **Apollo Client (with GraphQL)**: Ideal for mimicking how Checkatrade likely manages their real data. Offers cache, devtools, and strong TypeScript integration.
+- **Apollo Client (with GraphQL)**: Offers cache, devtools, and strong TypeScript integration.
 - **MSW**:
   - Mock GraphQL endpoints or REST APIs
   - Works with both unit tests and dev environments
