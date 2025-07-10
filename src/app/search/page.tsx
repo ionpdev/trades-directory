@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   GET_ALL_TRADESPEOPLE,
   GET_TRADESPEOPLE_BY_SEARCH,
@@ -187,9 +187,28 @@ const postcodeAreas = [
 
 export default function SearchPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [trade, setTrade] = useState("");
   const [postcode, setPostcode] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
+
+  // Handle URL parameters from home page
+  useEffect(() => {
+    const tradeParam = searchParams.get("trade");
+    const postcodeParam = searchParams.get("postcode");
+
+    if (tradeParam) {
+      setTrade(tradeParam);
+    }
+    if (postcodeParam) {
+      setPostcode(postcodeParam);
+    }
+
+    // If we have parameters, automatically search
+    if (tradeParam || postcodeParam) {
+      setHasSearched(true);
+    }
+  }, [searchParams]);
 
   const [, { data: allData, loading: allLoading }] =
     useQueryOnMSWReady<GetTradespeopleResponse>(GET_ALL_TRADESPEOPLE);
@@ -199,6 +218,13 @@ export default function SearchPage() {
       GetTradespeopleResponse,
       GetTradespeopleBySearchVariables
     >(GET_TRADESPEOPLE_BY_SEARCH);
+
+  // Trigger search when URL parameters are loaded
+  useEffect(() => {
+    if (hasSearched && (trade || postcode)) {
+      search({ variables: { trade, postcode } });
+    }
+  }, [hasSearched, trade, postcode, search]);
 
   const handleSearch = () => {
     if (trade || postcode) {
@@ -221,7 +247,7 @@ export default function SearchPage() {
   const isLoading = hasSearched ? searchLoading : allLoading;
 
   return (
-    <main className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
+    <main className="bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold">Find Trusted Tradespeople</h1>

@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  ArrowLeft,
   Phone,
   Mail,
   Globe,
@@ -67,16 +66,8 @@ export default function TradespersonPage() {
 
   if (error || !data?.tradesperson) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="bg-background">
         <div className="max-w-6xl mx-auto py-8 px-4">
-          <Button
-            variant="ghost"
-            onClick={() => router.back()}
-            className="mb-6"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
           <div className="text-center py-16">
             <h1 className="text-2xl font-bold mb-4">Tradesperson Not Found</h1>
             <p className="text-muted-foreground mb-6">
@@ -95,14 +86,8 @@ export default function TradespersonPage() {
   const tradesperson = data.tradesperson;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       <div className="max-w-6xl mx-auto py-8 px-4 space-y-8">
-        {/* Back Button */}
-        <Button variant="ghost" onClick={() => router.back()} className="mb-6">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Search
-        </Button>
-
         {/* Header Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Profile Info */}

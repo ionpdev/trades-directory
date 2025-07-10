@@ -3,6 +3,8 @@ import { ApolloProvider } from "@apollo/client";
 import { apolloClient } from "@/lib/apollo/client";
 import { MSWProvider } from "@/contexts/MSWContext";
 import { MSWStatus } from "@/components/MSWStatus";
+import { Navigation } from "@/components/Navigation";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import "@/styles/globals.css";
 
 export default function RootLayout({
@@ -15,7 +17,9 @@ export default function RootLayout({
       <body>
         <MSWProvider>
           <ApolloProvider client={apolloClient}>
-            {children}
+            <Navigation />
+            <Breadcrumb />
+            <main className="min-h-screen">{children}</main>
             <MSWStatus />
           </ApolloProvider>
         </MSWProvider>

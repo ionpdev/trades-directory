@@ -1,7 +1,7 @@
 describe("Trades Directory E2E Tests", () => {
-  it("loads home page and displays Next.js content", () => {
+  it("loads home page and displays main heading", () => {
     cy.visit("/");
-    cy.contains("Get started by editing");
+    cy.contains("Find Trusted Tradespeople Near You");
   });
 
   it("loads search page and displays main header", () => {

@@ -1,0 +1,55 @@
+"use client";
+
+import { useRouter, usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Home, Search } from "lucide-react";
+
+export function Navigation() {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  return (
+    <nav className="bg-background border-b border-border sticky top-0 z-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div
+            className="flex items-center space-x-2 cursor-pointer"
+            onClick={() => router.push("/")}
+          >
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-sm">
+                TD
+              </span>
+            </div>
+            <span className="text-xl font-bold text-foreground">
+              TradesDirectory
+            </span>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="flex items-center space-x-4">
+            <Button
+              variant={pathname === "/" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => router.push("/")}
+              className="flex items-center space-x-2"
+            >
+              <Home className="w-4 h-4" />
+              <span>Home</span>
+            </Button>
+            <Button
+              variant={pathname === "/search" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => router.push("/search")}
+              className="flex items-center space-x-2"
+            >
+              <Search className="w-4 h-4" />
+              <span>Search</span>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+}
