@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { ClientProviders } from "./client"
+import ClientProviders from "./client"
 import "@/styles/globals.css"
 
 export const metadata: Metadata = {

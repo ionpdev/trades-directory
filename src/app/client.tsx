@@ -12,7 +12,7 @@ interface ClientProvidersProps {
   children: React.ReactNode
 }
 
-export function ClientProviders({ children }: ClientProvidersProps) {
+const ClientProviders = ({ children }: ClientProvidersProps) => {
   return (
     <MSWProvider>
       <AuthProvider>
@@ -27,3 +27,5 @@ export function ClientProviders({ children }: ClientProvidersProps) {
     </MSWProvider>
   )
 }
+
+export default ClientProviders
