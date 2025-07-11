@@ -19,7 +19,7 @@
 
 # production
 /build
-/cloud-setup
+
 # misc
 .DS_Store
 *.pem
