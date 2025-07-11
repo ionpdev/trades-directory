@@ -1,35 +1,24 @@
-"use client"
-import { ApolloProvider } from "@apollo/client"
-import { apolloClient } from "@/lib/apollo/client"
-import { MSWProvider } from "@/contexts/MSWContext"
-import { AuthProvider } from "@/contexts/AuthContext"
-import { FavoritesProvider } from "@/contexts/FavoritesContext"
-import { MSWStatus } from "@/components/MSWStatus"
-import { Navigation } from "@/components/Navigation"
-import Breadcrumb from "@/components/Breadcrumb"
+import type { Metadata } from "next"
+import { ClientProviders } from "./client"
 import "@/styles/globals.css"
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export const metadata: Metadata = {
+  title: {
+    default: "Trades Directory - Find Trusted Local Tradespeople",
+    template: "%s | Trades Directory",
+  },
+  description:
+    "Find and hire verified local tradespeople including plumbers, electricians, carpenters, and more. Read reviews, compare quotes, and book trusted professionals in your area.",
+}
+
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body>
-        <MSWProvider>
-          <AuthProvider>
-            <FavoritesProvider>
-              <ApolloProvider client={apolloClient}>
-                <Navigation />
-                <Breadcrumb />
-                <main className="min-h-screen">{children}</main>
-                <MSWStatus />
-              </ApolloProvider>
-            </FavoritesProvider>
-          </AuthProvider>
-        </MSWProvider>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   )
 }
+
+export default RootLayout

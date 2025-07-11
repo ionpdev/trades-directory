@@ -1,16 +1,16 @@
 import bcrypt from "bcryptjs"
 
-// Mock user database - in a real app, this would be a database
+// Mock user database - in a real app, this would be a database for now just Localstorage
 export interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: "customer" | "tradesperson";
-  createdAt: Date;
+  id: string
+  email: string
+  name: string
+  role: "customer" | "tradesperson"
+  createdAt: Date
 }
 
 interface MockUser extends User {
-  password: string;
+  password: string
 }
 
 const mockUsers: MockUser[] = [

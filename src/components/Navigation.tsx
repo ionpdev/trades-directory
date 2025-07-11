@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/AuthContext"
 import { Button } from "@/components/ui/button"
 import { Home, Search, User, LogIn, UserPlus } from "lucide-react"
 
-export function Navigation() {
+const Navigation = () => {
   const router = useRouter()
   const pathname = usePathname()
   const { user, logout } = useAuth()
@@ -14,7 +14,6 @@ export function Navigation() {
     <nav className="bg-background border-b border-border sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <div
             className="flex items-center space-x-2 cursor-pointer"
             onClick={() => router.push("/")}
@@ -105,3 +104,5 @@ export function Navigation() {
     </nav>
   )
 }
+
+export default Navigation

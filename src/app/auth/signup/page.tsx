@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
 
-export default function SignUpPage() {
+const SignUpPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -143,3 +143,5 @@ export default function SignUpPage() {
     </div>
   )
 }
+
+export default SignUpPage

@@ -3,8 +3,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
 
 interface MSWContextType {
-  isReady: boolean;
-  error: string | null;
+  isReady: boolean
+  error: string | null
 }
 
 const MSWContext = createContext<MSWContextType>({
@@ -21,7 +21,7 @@ export const useMSW = () => {
 }
 
 interface MSWProviderProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export const MSWProvider: React.FC<MSWProviderProps> = ({ children }) => {
@@ -47,11 +47,11 @@ export const MSWProvider: React.FC<MSWProviderProps> = ({ children }) => {
         .catch((err) => {
           console.error("[MSW] Failed to start worker:", err)
           setError(err.message)
-          // In case of error, still set ready to true so app can function
+          // even if we get an error for now I just pass it for Demo purpose
           setIsReady(true)
         })
     } else {
-      // In production, MSW is not needed, so mark as ready immediately
+      // We don't need MSW in Prod so we just pass it as ready
       setIsReady(true)
     }
   }, [])

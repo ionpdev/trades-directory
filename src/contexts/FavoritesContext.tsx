@@ -4,10 +4,10 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { useAuth } from "./AuthContext"
 
 interface FavoritesContextType {
-  favorites: string[];
-  addFavorite: (tradespersonId: string) => void;
-  removeFavorite: (tradespersonId: string) => void;
-  isFavorite: (tradespersonId: string) => boolean;
+  favorites: string[]
+  addFavorite: (tradespersonId: string) => void
+  removeFavorite: (tradespersonId: string) => void
+  isFavorite: (tradespersonId: string) => boolean
 }
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(
@@ -20,14 +20,13 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (user) {
-      // Load favorites from localStorage for this user
       const key = `favorites_${user.id}`
       const storedFavorites = localStorage.getItem(key)
       if (storedFavorites) {
         try {
           setFavorites(JSON.parse(storedFavorites))
         } catch (error) {
-          console.error("Failed to parse favorites:", error)
+          console.error("Failed to load from local favorites:", error)
           setFavorites([])
         }
       }
@@ -41,10 +40,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
 
     setFavorites((prev) => {
       const newFavorites = [...prev, tradespersonId]
-      localStorage.setItem(
-        `favorites_${user.id}`,
-        JSON.stringify(newFavorites)
-      )
+      localStorage.setItem(`favorites_${user.id}`, JSON.stringify(newFavorites))
       return newFavorites
     })
   }
@@ -54,10 +50,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
 
     setFavorites((prev) => {
       const newFavorites = prev.filter((id) => id !== tradespersonId)
-      localStorage.setItem(
-        `favorites_${user.id}`,
-        JSON.stringify(newFavorites)
-      )
+      localStorage.setItem(`favorites_${user.id}`, JSON.stringify(newFavorites))
       return newFavorites
     })
   }

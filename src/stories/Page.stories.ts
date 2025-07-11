@@ -14,7 +14,7 @@ const meta = {
 } satisfies Meta<typeof Page>
 
 export default meta
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const LoggedOut: Story = {}
 
