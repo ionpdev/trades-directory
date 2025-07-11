@@ -53,7 +53,7 @@ A modern, scalable trades directory application built with Next.js 15, TypeScrip
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20+
 - npm, yarn, pnpm, or bun
 
 ### Installation
@@ -98,40 +98,6 @@ npm run storybook       # Start Storybook dev server on port 5000
 npm run build-storybook # Build Storybook for production
 ```
 
-## Testing Strategy
-
-### Unit Tests
-
-- **Framework**: Vitest + React Testing Library
-- **Location**: `src/**/*.test.tsx`
-- **Coverage**: Components, hooks, utilities
-- **MSW Integration**: Mock API calls in tests
-
-```bash
-npm run test         # Run all tests
-npm run test:watch   # Watch mode for development
-```
-
-### E2E Tests
-
-- **Framework**: Cypress
-- **Location**: `cypress/e2e/`
-- **Coverage**: User flows, authentication, search functionality
-
-```bash
-npm run test:e2e     # Open Cypress test runner
-```
-
-### Storybook
-
-- **Purpose**: Component development and documentation
-- **Location**: `src/**/*.stories.tsx`
-- **URL**: [http://localhost:5000](http://localhost:5000)
-
-```bash
-npm run storybook    # Start Storybook server
-```
-
 ## Project Structure
 
 ```
@@ -143,8 +109,8 @@ src/
    ── tradesperson/            # Tradesperson detail pages
 ── components/                 # Reusable UI components
    ── ui/                      # Base UI components (shadcn/ui)
-   ── TradespersonCard/        # Tradesperson card component
    ── Navigation.tsx           # Main navigation
+   ── /.....                   # Many reusable components
 ── contexts/                   # React contexts
    ── AuthContext.tsx          # Authentication state
    ── FavoritesContext.tsx     # Favorites management
@@ -170,10 +136,9 @@ src/
 
 ### UI Components
 
-- **Radix UI** - Accessible, unstyled UI primitives
-- **Lucide React** - Beautiful, consistent icons
-- **React Hook Form** - Performant forms with validation
-- **Zod** - Schema validation
+- **Shadcn ui** - UI components
+- **Tailwindcss** - CSS framework
+- **Lucide React** - Icons
 
 ### Testing & Development
 
@@ -222,7 +187,6 @@ This application uses **Mock Service Worker (MSW)** to simulate a real backend:
 - **GraphQL API**: Mock queries for tradespeople, search, and user data
 - **Authentication**: In-memory user storage with bcrypt hashing
 - **Favorites**: localStorage-based persistence
-- **Real-time Feel**: Instant responses that feel like a production API
 
 The mock system is production-ready and can be easily replaced with real API endpoints.
 
@@ -231,54 +195,13 @@ The mock system is production-ready and can be easily replaced with real API end
 ### Vercel (Recommended)
 
 ```bash
-# Install Vercel CLI
+# Install Vercel CLI or prepare infra for GCP
 npm i -g vercel
 
 # Deploy
 vercel
 ```
 
-### Docker
-
-```bash
-# Build Docker image
-docker build -t trades-directory .
-
-# Run container
-docker run -p 3000:3000 trades-directory
-```
-
-### Static Export
-
-```bash
-# Generate static site
-npm run build
-
-# Serve static files from 'out' directory
-```
-
-## Development Guidelines
-
-### Code Style
-
-- Use TypeScript for all new files
-- Follow ESLint configuration
-- Use Prettier for code formatting
-- Write tests for new components and utilities
-
-### Component Development
-
-- Create Storybook stories for new components
-- Follow accessibility best practices
-- Use Radix UI primitives when possible
-- Implement responsive design
-
-### Testing Requirements
-
-- Unit tests for components and utilities
-- E2E tests for critical user flows
-- Storybook stories for component documentation
-
 ---
 
-**Demo Application** - Built to showcase modern web development practices and scalable architecture patterns.
+**Demo Application** - Built to showcase modern web development practices and scalable architecture patterns for CT technical interview.
