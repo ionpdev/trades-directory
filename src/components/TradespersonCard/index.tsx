@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 type Props = {
   name: string;
@@ -25,7 +25,7 @@ const TradespersonCard: React.FC<Props> = ({ name, rating, badges = [] }) => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default TradespersonCard;
+export default TradespersonCard

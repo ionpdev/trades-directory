@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, DollarSign, TrendingUp, PieChart } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
+import { ArrowLeft, DollarSign, TrendingUp, PieChart } from "lucide-react"
 
 export default function BudgetPage() {
-  const router = useRouter();
+  const router = useRouter()
 
   const monthlyExpenses = [
     {
@@ -27,7 +27,7 @@ export default function BudgetPage() {
       percentage: 12,
       color: "bg-purple-500",
     },
-  ];
+  ]
 
   const recentTransactions = [
     {
@@ -48,7 +48,7 @@ export default function BudgetPage() {
       amount: 200,
       tradesperson: "Michael Johnson",
     },
-  ];
+  ]
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -171,5 +171,5 @@ export default function BudgetPage() {
         </Card>
       </div>
     </div>
-  );
+  )
 }

@@ -1,18 +1,18 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 import {
   Search,
   Shield,
@@ -26,7 +26,7 @@ import {
   Hammer,
   Paintbrush,
   Home as HomeIcon,
-} from "lucide-react";
+} from "lucide-react"
 
 // Popular trades for quick access
 const popularTrades = [
@@ -36,7 +36,7 @@ const popularTrades = [
   { name: "Painter", icon: Paintbrush, count: "25+" },
   { name: "Carpenter", icon: Wrench, count: "20+" },
   { name: "Handyman", icon: HomeIcon, count: "35+" },
-];
+]
 
 // Trust indicators
 const trustFeatures = [
@@ -60,24 +60,24 @@ const trustFeatures = [
     title: "Quality Guaranteed",
     description: "Work backed by our quality guarantee",
   },
-];
+]
 
 export default function Home() {
-  const router = useRouter();
-  const [searchTrade, setSearchTrade] = useState("");
-  const [searchPostcode, setSearchPostcode] = useState("");
+  const router = useRouter()
+  const [searchTrade, setSearchTrade] = useState("")
+  const [searchPostcode, setSearchPostcode] = useState("")
 
   const handleSearch = () => {
-    const params = new URLSearchParams();
-    if (searchTrade) params.set("trade", searchTrade.toLowerCase());
-    if (searchPostcode) params.set("postcode", searchPostcode);
+    const params = new URLSearchParams()
+    if (searchTrade) params.set("trade", searchTrade.toLowerCase())
+    if (searchPostcode) params.set("postcode", searchPostcode)
 
-    router.push(`/search?${params.toString()}`);
-  };
+    router.push(`/search?${params.toString()}`)
+  }
 
   const handleTradeClick = (tradeName: string) => {
-    router.push(`/search?trade=${tradeName.toLowerCase()}`);
-  };
+    router.push(`/search?trade=${tradeName.toLowerCase()}`)
+  }
 
   return (
     <div className="bg-gradient-to-b from-background to-muted/30">
@@ -236,5 +236,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  );
+  )
 }

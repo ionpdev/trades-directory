@@ -1,3 +1,3 @@
-import { worker } from "./browser";
+import { worker } from "./browser"
 
-export { worker };
+export { worker }

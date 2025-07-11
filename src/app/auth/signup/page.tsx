@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/contexts/AuthContext"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -15,48 +15,48 @@ export default function SignUpPage() {
     email: "",
     password: "",
     confirmPassword: "",
-  });
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { register } = useAuth();
-  const router = useRouter();
+  })
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const { register } = useAuth()
+  const router = useRouter()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
-  };
+    })
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+    e.preventDefault()
+    setLoading(true)
+    setError("")
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      setLoading(false);
-      return;
+      setError("Passwords do not match")
+      setLoading(false)
+      return
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters long");
-      setLoading(false);
-      return;
+      setError("Password must be at least 6 characters long")
+      setLoading(false)
+      return
     }
 
     const success = await register(
       formData.email,
       formData.password,
       formData.name
-    );
+    )
     if (success) {
-      router.push("/dashboard");
+      router.push("/dashboard")
     } else {
-      setError("Registration failed. Please try again.");
+      setError("Registration failed. Please try again.")
     }
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -141,5 +141,5 @@ export default function SignUpPage() {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

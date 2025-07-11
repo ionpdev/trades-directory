@@ -1,4 +1,4 @@
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse } from "msw"
 
 interface GraphQLRequest {
   query: string;
@@ -1325,39 +1325,39 @@ const mockTradespeople = [
     responseTime: "Usually responds within 8 hours",
     verified: true,
   },
-];
+]
 
 // Helper function to filter tradespeople by trade and postcode
 function filterTradespeople(trade?: string, postcode?: string) {
-  let filtered = [...mockTradespeople];
+  let filtered = [...mockTradespeople]
 
   if (trade) {
-    const searchTrade = trade.toLowerCase().trim();
+    const searchTrade = trade.toLowerCase().trim()
     filtered = filtered.filter(
       (person) =>
         person.trade.toLowerCase().includes(searchTrade) ||
         person.name.toLowerCase().includes(searchTrade)
-    );
+    )
   }
 
   if (postcode) {
-    const searchPostcode = postcode.toLowerCase().trim().replace(/\s+/g, "");
+    const searchPostcode = postcode.toLowerCase().trim().replace(/\s+/g, "")
     filtered = filtered.filter((person) =>
       person.postcode.toLowerCase().includes(searchPostcode)
-    );
+    )
   }
 
   // Sort by rating (highest first)
-  return filtered.sort((a, b) => b.rating - a.rating);
+  return filtered.sort((a, b) => b.rating - a.rating)
 }
 
 export const handlers = [
   http.post("/api/graphql", async ({ request }) => {
-    const body = (await request.json()) as GraphQLRequest;
-    const { variables, operationName } = body;
+    const body = (await request.json()) as GraphQLRequest
+    const { variables, operationName } = body
 
-    console.log("[MSW] Intercepted GraphQL request:", operationName);
-    console.log("[MSW] Variables:", variables);
+    console.log("[MSW] Intercepted GraphQL request:", operationName)
+    console.log("[MSW] Variables:", variables)
 
     // Handle GetTradespeople query (all tradespeople)
     if (operationName === "GetTradespeople") {
@@ -1369,13 +1369,13 @@ export const handlers = [
           name: person.name,
           rating: person.rating,
           badges: person.badges,
-        }));
+        }))
 
       return HttpResponse.json({
         data: {
           tradespeople: allTradespeople,
         },
-      });
+      })
     }
 
     // Handle GetTradespeopleByTypeAndPostcode query (filtered search)
@@ -1383,7 +1383,7 @@ export const handlers = [
       const { trade, postcode } = variables as {
         trade?: string;
         postcode?: string;
-      };
+      }
 
       const filteredTradespeople = filterTradespeople(trade, postcode)
         .slice(0, 25) // Show all matching results
@@ -1392,37 +1392,37 @@ export const handlers = [
           name: person.name,
           rating: person.rating,
           badges: person.badges,
-        }));
+        }))
 
       return HttpResponse.json({
         data: {
           tradespeople: filteredTradespeople,
         },
-      });
+      })
     }
 
     // Handle GetTradesperson query (individual tradesperson)
     if (operationName === "GetTradesperson") {
-      const { id } = variables as { id: string };
+      const { id } = variables as { id: string }
 
-      const tradesperson = mockTradespeople.find((person) => person.id === id);
+      const tradesperson = mockTradespeople.find((person) => person.id === id)
 
       if (!tradesperson) {
         return HttpResponse.json({
           errors: [{ message: `Tradesperson with id ${id} not found` }],
-        });
+        })
       }
 
       return HttpResponse.json({
         data: {
           tradesperson,
         },
-      });
+      })
     }
 
     // Default response for unhandled queries
     return HttpResponse.json({
       errors: [{ message: `Unhandled GraphQL operation: ${operationName}` }],
-    });
+    })
   }),
-];
+]

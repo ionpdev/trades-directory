@@ -1,4 +1,4 @@
-import "./button.css";
+import "./button.css"
 
 export interface ButtonProps {
   /** Is this the principal call to action on the page? */
@@ -23,7 +23,7 @@ export const Button = ({
 }: ButtonProps) => {
   const mode = primary
     ? "storybook-button--primary"
-    : "storybook-button--secondary";
+    : "storybook-button--secondary"
   return (
     <button
       type="button"
@@ -39,5 +39,5 @@ export const Button = ({
         }
       `}</style>
     </button>
-  );
-};
+  )
+}

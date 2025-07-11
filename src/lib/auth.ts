@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs"
 
 // Mock user database - in a real app, this would be a database
 export interface User {
@@ -38,24 +38,24 @@ const mockUsers: MockUser[] = [
     role: "tradesperson",
     createdAt: new Date("2024-01-10"),
   },
-];
+]
 
 export class AuthService {
   static async login(email: string, password: string): Promise<User | null> {
-    const user = mockUsers.find((u) => u.email === email);
+    const user = mockUsers.find((u) => u.email === email)
     if (!user) {
-      return null;
+      return null
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = await bcrypt.compare(password, user.password)
     if (!isValidPassword) {
-      return null;
+      return null
     }
 
     // Return user without password
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _, ...userWithoutPassword } = user;
-    return userWithoutPassword;
+    const { password: _, ...userWithoutPassword } = user
+    return userWithoutPassword
   }
 
   static async register(
@@ -64,13 +64,13 @@ export class AuthService {
     name: string
   ): Promise<User | null> {
     // Check if user already exists
-    const existingUser = mockUsers.find((u) => u.email === email);
+    const existingUser = mockUsers.find((u) => u.email === email)
     if (existingUser) {
-      throw new Error("User already exists");
+      throw new Error("User already exists")
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10)
 
     // Create new user
     const newUser: MockUser = {
@@ -80,39 +80,39 @@ export class AuthService {
       name,
       role: "customer",
       createdAt: new Date(),
-    };
+    }
 
-    mockUsers.push(newUser);
+    mockUsers.push(newUser)
 
     // Return user without password
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _, ...userWithoutPassword } = newUser;
-    return userWithoutPassword;
+    const { password: _, ...userWithoutPassword } = newUser
+    return userWithoutPassword
   }
 
   static async getUserById(id: string): Promise<User | null> {
-    const user = mockUsers.find((u) => u.id === id);
+    const user = mockUsers.find((u) => u.id === id)
     if (!user) {
-      return null;
+      return null
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _, ...userWithoutPassword } = user;
-    return userWithoutPassword;
+    const { password: _, ...userWithoutPassword } = user
+    return userWithoutPassword
   }
 
   static async updateUser(
     id: string,
     updates: Partial<Omit<User, "id" | "createdAt">>
   ): Promise<User | null> {
-    const userIndex = mockUsers.findIndex((u) => u.id === id);
+    const userIndex = mockUsers.findIndex((u) => u.id === id)
     if (userIndex === -1) {
-      return null;
+      return null
     }
 
-    mockUsers[userIndex] = { ...mockUsers[userIndex], ...updates };
+    mockUsers[userIndex] = { ...mockUsers[userIndex], ...updates }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _, ...userWithoutPassword } = mockUsers[userIndex];
-    return userWithoutPassword;
+    const { password: _, ...userWithoutPassword } = mockUsers[userIndex]
+    return userWithoutPassword
   }
 }

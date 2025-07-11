@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, Clock, Calendar, User, Phone, Mail } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { useRouter } from "next/navigation"
+import { ArrowLeft, Clock, Calendar, User, Phone, Mail } from "lucide-react"
 
 export default function WorkProgressPage() {
-  const router = useRouter();
+  const router = useRouter()
 
   const workInProgress = [
     {
@@ -55,20 +55,20 @@ export default function WorkProgressPage() {
       email: "emma.thompson@email.com",
       lastUpdate: "2025-01-09",
     },
-  ];
+  ]
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "In Progress":
-        return "bg-blue-100 text-blue-800";
+        return "bg-blue-100 text-blue-800"
       case "Started":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800"
       case "Delayed":
-        return "bg-red-100 text-red-800";
+        return "bg-red-100 text-red-800"
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 text-gray-800"
     }
-  };
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -187,5 +187,5 @@ export default function WorkProgressPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

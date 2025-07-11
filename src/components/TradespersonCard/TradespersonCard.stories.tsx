@@ -1,9 +1,9 @@
-import TradespersonCard from ".";
+import TradespersonCard from "."
 
 export default {
   title: "Components/TradespersonCard",
   component: TradespersonCard,
-};
+}
 
 export const Default = {
   args: {
@@ -11,4 +11,4 @@ export const Default = {
     rating: 4.9,
     badges: ["Verified", "Top Rated"],
   },
-};
+}

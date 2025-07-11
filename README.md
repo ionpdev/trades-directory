@@ -1,4 +1,4 @@
-# TradesDirectory - Modern Trades Platform
+# TradesDirectory - Learning Demo Project
 
 A modern, scalable trades directory application built with Next.js 15, TypeScript, and GraphQL. This demo showcases features to be used during a tech interview, including tradesperson search, user authentication, project management, and financial tracking.
 

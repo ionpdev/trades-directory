@@ -1,14 +1,14 @@
-"use client";
+"use client"
 
-import { useRouter, usePathname } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@/components/ui/button";
-import { Home, Search, User, LogIn, UserPlus } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation"
+import { useAuth } from "@/contexts/AuthContext"
+import { Button } from "@/components/ui/button"
+import { Home, Search, User, LogIn, UserPlus } from "lucide-react"
 
 export function Navigation() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const { user, logout } = useAuth();
+  const router = useRouter()
+  const pathname = usePathname()
+  const { user, logout } = useAuth()
 
   return (
     <nav className="bg-background border-b border-border sticky top-0 z-50">
@@ -69,8 +69,8 @@ export function Navigation() {
                   variant="ghost"
                   size="sm"
                   onClick={() => {
-                    logout();
-                    router.push("/");
+                    logout()
+                    router.push("/")
                   }}
                   className="text-muted-foreground"
                 >
@@ -103,5 +103,5 @@ export function Navigation() {
         </div>
       </div>
     </nav>
-  );
+  )
 }

@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { useRouter } from "next/navigation";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { useRouter } from "next/navigation"
 import {
   ArrowLeft,
   CheckCircle,
   Star,
   Calendar,
   DollarSign,
-} from "lucide-react";
+} from "lucide-react"
 
 export default function WorkHistoryPage() {
-  const router = useRouter();
+  const router = useRouter()
 
   const completedWork = [
     {
@@ -76,7 +76,7 @@ export default function WorkHistoryPage() {
       review: "Beautiful finish, very neat and tidy work.",
       category: "Home Repairs",
     },
-  ];
+  ]
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -86,26 +86,26 @@ export default function WorkHistoryPage() {
           i < rating ? "text-yellow-500 fill-current" : "text-gray-300"
         }`}
       />
-    ));
-  };
+    ))
+  }
 
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "Home Repairs":
-        return "bg-blue-100 text-blue-800";
+        return "bg-blue-100 text-blue-800"
       case "Garden/Outdoor":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800"
       case "Maintenance":
-        return "bg-purple-100 text-purple-800";
+        return "bg-purple-100 text-purple-800"
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 text-gray-800"
     }
-  };
+  }
 
-  const totalSpent = completedWork.reduce((sum, work) => sum + work.cost, 0);
+  const totalSpent = completedWork.reduce((sum, work) => sum + work.cost, 0)
   const averageRating =
     completedWork.reduce((sum, work) => sum + work.rating, 0) /
-    completedWork.length;
+    completedWork.length
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -260,5 +260,5 @@ export default function WorkHistoryPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

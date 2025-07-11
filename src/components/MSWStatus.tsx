@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import { useMSW } from "@/contexts/MSWContext";
+import { useMSW } from "@/contexts/MSWContext"
 
 export function MSWStatus() {
-  const { isReady, error } = useMSW();
+  const { isReady, error } = useMSW()
 
   if (process.env.NODE_ENV !== "development") {
-    return null;
+    return null
   }
 
   return (
@@ -24,5 +24,5 @@ export function MSWStatus() {
         )}
       </div>
     </div>
-  );
+  )
 }

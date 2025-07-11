@@ -1,42 +1,40 @@
-"use client";
+"use client"
 
-import { useRouter, usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { ChevronRight, Home, Search, User } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { ChevronRight, Home, Search, User } from "lucide-react"
 
 interface BreadcrumbItem {
-  label: string;
-  href: string;
-  icon?: React.ComponentType<{ className?: string }>;
+  label: string
+  href: string
+  icon?: React.ComponentType<{ className?: string }>
 }
 
-export function Breadcrumb() {
-  const router = useRouter();
-  const pathname = usePathname();
+const Breadcrumb = () => {
+  const router = useRouter()
+  const pathname = usePathname()
 
-  // Generate breadcrumb items based on current path
   const getBreadcrumbItems = (): BreadcrumbItem[] => {
-    const items: BreadcrumbItem[] = [{ label: "Home", href: "/", icon: Home }];
+    const items: BreadcrumbItem[] = [{ label: "Home", href: "/", icon: Home }]
 
     if (pathname === "/search") {
-      items.push({ label: "Search", href: "/search", icon: Search });
+      items.push({ label: "Search", href: "/search", icon: Search })
     } else if (pathname.startsWith("/tradesperson/")) {
-      items.push({ label: "Search", href: "/search", icon: Search });
+      items.push({ label: "Search", href: "/search", icon: Search })
       items.push({
         label: "Profile",
         href: pathname,
         icon: User,
-      });
+      })
     }
 
-    return items;
-  };
+    return items
+  }
 
-  const breadcrumbItems = getBreadcrumbItems();
+  const breadcrumbItems = getBreadcrumbItems()
 
-  // Don't show breadcrumb on home page
   if (pathname === "/") {
-    return null;
+    return null
   }
 
   return (
@@ -69,5 +67,7 @@ export function Breadcrumb() {
         </div>
       </div>
     </div>
-  );
+  )
 }
+
+export default Breadcrumb

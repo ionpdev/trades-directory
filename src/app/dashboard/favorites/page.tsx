@@ -1,53 +1,53 @@
-"use client";
+"use client"
 
-import { useAuth } from "@/contexts/AuthContext";
-import { useFavorites } from "@/contexts/FavoritesContext";
-import { useLazyQueryWithMSW } from "@/hooks/useMSWQuery";
-import { GET_ALL_TRADESPEOPLE } from "@/lib/apollo/queries";
-import { useRouter } from "next/navigation";
-import { useEffect, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Heart, Star, MapPin, Phone } from "lucide-react";
-import type { GetTradespeopleResponse } from "@/types/graphql";
+import { useAuth } from "@/contexts/AuthContext"
+import { useFavorites } from "@/contexts/FavoritesContext"
+import { useLazyQueryWithMSW } from "@/hooks/useMSWQuery"
+import { GET_ALL_TRADESPEOPLE } from "@/lib/apollo/queries"
+import { useRouter } from "next/navigation"
+import { useEffect, useCallback } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Heart, Star, MapPin, Phone } from "lucide-react"
+import type { GetTradespeopleResponse } from "@/types/graphql"
 
 export default function FavoritesPage() {
-  const { user, loading: authLoading } = useAuth();
-  const { favorites, removeFavorite } = useFavorites();
-  const router = useRouter();
+  const { user, loading: authLoading } = useAuth()
+  const { favorites, removeFavorite } = useFavorites()
+  const router = useRouter()
 
   const [fetchTradespeople, { data, loading }] = useLazyQueryWithMSW<
     GetTradespeopleResponse,
     Record<string, never>
-  >(GET_ALL_TRADESPEOPLE);
+  >(GET_ALL_TRADESPEOPLE)
 
   const fetchFavorites = useCallback(() => {
     if (favorites.length > 0) {
-      fetchTradespeople({ variables: {} });
+      fetchTradespeople({ variables: {} })
     }
-  }, [favorites, fetchTradespeople]);
+  }, [favorites, fetchTradespeople])
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push("/auth/signin");
+      router.push("/auth/signin")
     }
-  }, [user, authLoading, router]);
+  }, [user, authLoading, router])
 
   useEffect(() => {
-    fetchFavorites();
-  }, [fetchFavorites]);
+    fetchFavorites()
+  }, [fetchFavorites])
 
   if (authLoading || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
-    );
+    )
   }
 
   const favoriteTradespeople =
-    data?.tradespeople?.filter((tp) => favorites.includes(tp.id)) || [];
+    data?.tradespeople?.filter((tp) => favorites.includes(tp.id)) || []
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -99,8 +99,8 @@ export default function FavoritesPage() {
                       variant="ghost"
                       size="sm"
                       onClick={(e) => {
-                        e.stopPropagation();
-                        removeFavorite(person.id);
+                        e.stopPropagation()
+                        removeFavorite(person.id)
                       }}
                     >
                       <Heart className="w-4 h-4 fill-red-500 text-red-500" />
@@ -152,8 +152,8 @@ export default function FavoritesPage() {
                       size="sm"
                       className="flex-1"
                       onClick={(e) => {
-                        e.stopPropagation();
-                        router.push(`/tradesperson/${person.id}`);
+                        e.stopPropagation()
+                        router.push(`/tradesperson/${person.id}`)
                       }}
                     >
                       <Phone className="w-4 h-4 mr-1" />
@@ -163,8 +163,8 @@ export default function FavoritesPage() {
                       size="sm"
                       variant="outline"
                       onClick={(e) => {
-                        e.stopPropagation();
-                        router.push(`/tradesperson/${person.id}`);
+                        e.stopPropagation()
+                        router.push(`/tradesperson/${person.id}`)
                       }}
                     >
                       View Profile
@@ -177,5 +177,5 @@ export default function FavoritesPage() {
         )}
       </div>
     </div>
-  );
+  )
 }

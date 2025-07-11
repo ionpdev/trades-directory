@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { useParams, useRouter } from "next/navigation";
-import { useLazyQueryWithMSW } from "@/hooks/useMSWQuery";
-import { GET_TRADESPERSON_BY_ID } from "@/lib/apollo/queries";
-import { useAuth } from "@/contexts/AuthContext";
-import { useFavorites } from "@/contexts/FavoritesContext";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useParams, useRouter } from "next/navigation"
+import { useLazyQueryWithMSW } from "@/hooks/useMSWQuery"
+import { GET_TRADESPERSON_BY_ID } from "@/lib/apollo/queries"
+import { useAuth } from "@/contexts/AuthContext"
+import { useFavorites } from "@/contexts/FavoritesContext"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import {
   Phone,
   Mail,
@@ -17,34 +17,34 @@ import {
   Star,
   CheckCircle,
   Heart,
-} from "lucide-react";
+} from "lucide-react"
 import type {
   GetTradespersonResponse,
   GetTradespersonVariables,
-} from "@/types/graphql";
-import { useEffect, useCallback } from "react";
+} from "@/types/graphql"
+import { useEffect, useCallback } from "react"
 
 export default function TradespersonPage() {
-  const params = useParams();
-  const router = useRouter();
-  const { user } = useAuth();
-  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
-  const id = params?.id as string;
+  const params = useParams()
+  const router = useRouter()
+  const { user } = useAuth()
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites()
+  const id = params?.id as string
 
   const [fetchTradesperson, { data, loading, error }] = useLazyQueryWithMSW<
     GetTradespersonResponse,
     GetTradespersonVariables
-  >(GET_TRADESPERSON_BY_ID);
+  >(GET_TRADESPERSON_BY_ID)
 
   const fetchTradespersonWithId = useCallback(() => {
     if (id) {
-      fetchTradesperson({ variables: { id } });
+      fetchTradesperson({ variables: { id } })
     }
-  }, [id, fetchTradesperson]);
+  }, [id, fetchTradesperson])
 
   useEffect(() => {
-    fetchTradespersonWithId();
-  }, [fetchTradespersonWithId]);
+    fetchTradespersonWithId()
+  }, [fetchTradespersonWithId])
 
   if (loading) {
     return (
@@ -66,7 +66,7 @@ export default function TradespersonPage() {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   if (error || !data?.tradesperson) {
@@ -85,24 +85,24 @@ export default function TradespersonPage() {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
-  const tradesperson = data.tradesperson;
-  const isUserFavorite = isFavorite(id);
+  const tradesperson = data.tradesperson
+  const isUserFavorite = isFavorite(id)
 
   const handleFavoriteToggle = () => {
     if (!user) {
-      router.push("/auth/signin");
-      return;
+      router.push("/auth/signin")
+      return
     }
 
     if (isUserFavorite) {
-      removeFavorite(id);
+      removeFavorite(id)
     } else {
-      addFavorite(id);
+      addFavorite(id)
     }
-  };
+  }
 
   return (
     <div className="bg-background">
@@ -365,5 +365,5 @@ export default function TradespersonPage() {
         )}
       </div>
     </div>
-  );
+  )
 }

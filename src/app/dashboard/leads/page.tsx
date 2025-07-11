@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { useRouter } from "next/navigation";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { useRouter } from "next/navigation"
 import {
   ArrowLeft,
   UserCheck,
@@ -11,10 +11,10 @@ import {
   Mail,
   MapPin,
   DollarSign,
-} from "lucide-react";
+} from "lucide-react"
 
 export default function LeadsPage() {
-  const router = useRouter();
+  const router = useRouter()
 
   const potentialClients = [
     {
@@ -69,37 +69,37 @@ export default function LeadsPage() {
       status: "Negotiating",
       description: "Leaking tap repair and bathroom sink replacement",
     },
-  ];
+  ]
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "New":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800"
       case "Contacted":
-        return "bg-blue-100 text-blue-800";
+        return "bg-blue-100 text-blue-800"
       case "Quote Sent":
-        return "bg-purple-100 text-purple-800";
+        return "bg-purple-100 text-purple-800"
       case "Negotiating":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-100 text-yellow-800"
       case "Closed":
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 text-gray-800"
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 text-gray-800"
     }
-  };
+  }
 
   const getUrgencyColor = (urgency: string) => {
     switch (urgency) {
       case "High":
-        return "bg-red-100 text-red-800";
+        return "bg-red-100 text-red-800"
       case "Medium":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-100 text-yellow-800"
       case "Low":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800"
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 text-gray-800"
     }
-  };
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -246,5 +246,5 @@ export default function LeadsPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

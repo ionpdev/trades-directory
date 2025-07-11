@@ -1,29 +1,29 @@
-"use client";
+"use client"
 
-import { useState, useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, Suspense } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import {
   GET_ALL_TRADESPEOPLE,
   GET_TRADESPEOPLE_BY_SEARCH,
-} from "@/lib/apollo/queries";
-import { useQueryOnMSWReady, useLazyQueryWithMSW } from "@/hooks/useMSWQuery";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+} from "@/lib/apollo/queries"
+import { useQueryOnMSWReady, useLazyQueryWithMSW } from "@/hooks/useMSWQuery"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 import type {
   GetTradespeopleResponse,
   GetTradespeopleBySearchVariables,
   Tradesperson,
-} from "@/types/graphql";
+} from "@/types/graphql"
 
 // Common trade types for the dropdown
 const tradeTypes = [
@@ -47,7 +47,7 @@ const tradeTypes = [
   "Appliance Repair",
   "Fencing Contractor",
   "Landscaper",
-].sort();
+].sort()
 
 // Common postcodes for the dropdown
 const postcodes = [
@@ -88,34 +88,34 @@ const postcodes = [
   "BR3A",
   "CR0A",
   "CR2",
-].sort();
+].sort()
 
 // Component that handles search params (needs to be wrapped in Suspense)
 function SearchPageContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [trade, setTrade] = useState("all");
-  const [postcode, setPostcode] = useState("all");
-  const [customTrade, setCustomTrade] = useState("");
-  const [customPostcode, setCustomPostcode] = useState("");
-  const [hasSearched, setHasSearched] = useState(false);
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [trade, setTrade] = useState("all")
+  const [postcode, setPostcode] = useState("all")
+  const [customTrade, setCustomTrade] = useState("")
+  const [customPostcode, setCustomPostcode] = useState("")
+  const [hasSearched, setHasSearched] = useState(false)
 
   // Handle URL parameters from home page
   useEffect(() => {
-    const tradeParam = searchParams.get("trade");
-    const postcodeParam = searchParams.get("postcode");
+    const tradeParam = searchParams.get("trade")
+    const postcodeParam = searchParams.get("postcode")
 
     if (tradeParam) {
       // Check if it's a predefined trade type
       const isPredefindedTrade = tradeTypes.some(
         (t) => t.toLowerCase() === tradeParam.toLowerCase()
-      );
+      )
       if (isPredefindedTrade) {
-        setTrade(tradeParam.toLowerCase());
-        setCustomTrade(tradeParam.toLowerCase());
+        setTrade(tradeParam.toLowerCase())
+        setCustomTrade(tradeParam.toLowerCase())
       } else {
-        setTrade("custom");
-        setCustomTrade(tradeParam);
+        setTrade("custom")
+        setCustomTrade(tradeParam)
       }
     }
 
@@ -123,92 +123,92 @@ function SearchPageContent() {
       // Check if it's a predefined postcode
       const isPredefinedPostcode = postcodes.some(
         (pc) => pc.toLowerCase() === postcodeParam.toLowerCase()
-      );
+      )
       if (isPredefinedPostcode) {
-        setPostcode(postcodeParam.toLowerCase());
-        setCustomPostcode(postcodeParam.toLowerCase());
+        setPostcode(postcodeParam.toLowerCase())
+        setCustomPostcode(postcodeParam.toLowerCase())
       } else {
-        setPostcode("custom");
-        setCustomPostcode(postcodeParam);
+        setPostcode("custom")
+        setCustomPostcode(postcodeParam)
       }
     }
 
     // If we have parameters, automatically search
     if (tradeParam || postcodeParam) {
-      setHasSearched(true);
+      setHasSearched(true)
     }
-  }, [searchParams]);
+  }, [searchParams])
 
   // Get all tradespeople with MSW ready check
   const [, allResult] =
-    useQueryOnMSWReady<GetTradespeopleResponse>(GET_ALL_TRADESPEOPLE);
-  const allData = allResult.data;
-  const allLoading = allResult.loading;
+    useQueryOnMSWReady<GetTradespeopleResponse>(GET_ALL_TRADESPEOPLE)
+  const allData = allResult.data
+  const allLoading = allResult.loading
 
   // Search query hook
   const [search, { data: searchData, loading: searchLoading }] =
     useLazyQueryWithMSW<
       GetTradespeopleResponse,
       GetTradespeopleBySearchVariables
-    >(GET_TRADESPEOPLE_BY_SEARCH);
+    >(GET_TRADESPEOPLE_BY_SEARCH)
 
   // Auto-search when parameters change
   useEffect(() => {
     const searchTrade =
-      trade === "all" ? customTrade : trade === "custom" ? customTrade : trade;
+      trade === "all" ? customTrade : trade === "custom" ? customTrade : trade
     const searchPostcode =
       postcode === "all"
         ? customPostcode
         : postcode === "custom"
         ? customPostcode
-        : postcode;
+        : postcode
 
     if (hasSearched && (searchTrade || searchPostcode)) {
-      search({ variables: { trade: searchTrade, postcode: searchPostcode } });
+      search({ variables: { trade: searchTrade, postcode: searchPostcode } })
     }
-  }, [hasSearched, trade, postcode, customTrade, customPostcode, search]);
+  }, [hasSearched, trade, postcode, customTrade, customPostcode, search])
 
   const handleSearch = () => {
     const searchTrade =
-      trade === "all" ? customTrade : trade === "custom" ? customTrade : trade;
+      trade === "all" ? customTrade : trade === "custom" ? customTrade : trade
     const searchPostcode =
       postcode === "all"
         ? customPostcode
         : postcode === "custom"
         ? customPostcode
-        : postcode;
+        : postcode
 
     if (searchTrade || searchPostcode) {
-      setHasSearched(true);
-      search({ variables: { trade: searchTrade, postcode: searchPostcode } });
+      setHasSearched(true)
+      search({ variables: { trade: searchTrade, postcode: searchPostcode } })
     }
-  };
+  }
 
   const handleClear = () => {
-    setTrade("all");
-    setPostcode("all");
-    setCustomTrade("");
-    setCustomPostcode("");
-    setHasSearched(false);
-  };
+    setTrade("all")
+    setPostcode("all")
+    setCustomTrade("")
+    setCustomPostcode("")
+    setHasSearched(false)
+  }
 
   // Helper function to check if search is disabled
   const isSearchDisabled = () => {
     const searchTrade =
-      trade === "all" ? customTrade : trade === "custom" ? customTrade : trade;
+      trade === "all" ? customTrade : trade === "custom" ? customTrade : trade
     const searchPostcode =
       postcode === "all"
         ? customPostcode
         : postcode === "custom"
         ? customPostcode
-        : postcode;
-    return !searchTrade && !searchPostcode;
-  };
+        : postcode
+    return !searchTrade && !searchPostcode
+  }
 
   // Determine which data to show
-  const dataToShow = hasSearched ? searchData : allData;
-  const loadingToShow = hasSearched ? searchLoading : allLoading;
-  const tradespeople = dataToShow?.tradespeople || [];
+  const dataToShow = hasSearched ? searchData : allData
+  const loadingToShow = hasSearched ? searchLoading : allLoading
+  const tradespeople = dataToShow?.tradespeople || []
 
   return (
     <main className="bg-background">
@@ -233,10 +233,10 @@ function SearchPageContent() {
                 <Select
                   value={trade}
                   onValueChange={(value) => {
-                    setTrade(value);
+                    setTrade(value)
                     // If a specific trade is selected, populate the custom input
                     if (value !== "all" && value !== "custom") {
-                      setCustomTrade(value);
+                      setCustomTrade(value)
                     }
                   }}
                 >
@@ -285,10 +285,10 @@ function SearchPageContent() {
                 <Select
                   value={postcode}
                   onValueChange={(value) => {
-                    setPostcode(value);
+                    setPostcode(value)
                     // If a specific postcode is selected, populate the custom input
                     if (value !== "all" && value !== "custom") {
-                      setCustomPostcode(value);
+                      setCustomPostcode(value)
                     }
                   }}
                 >
@@ -407,8 +407,8 @@ function SearchPageContent() {
                         size="sm"
                         className="flex-1"
                         onClick={(e) => {
-                          e.stopPropagation();
-                          router.push(`/tradesperson/${person.id}`);
+                          e.stopPropagation()
+                          router.push(`/tradesperson/${person.id}`)
                         }}
                       >
                         Contact
@@ -418,8 +418,8 @@ function SearchPageContent() {
                         variant="outline"
                         className="flex-1"
                         onClick={(e) => {
-                          e.stopPropagation();
-                          router.push(`/tradesperson/${person.id}`);
+                          e.stopPropagation()
+                          router.push(`/tradesperson/${person.id}`)
                         }}
                       >
                         View Profile
@@ -433,7 +433,7 @@ function SearchPageContent() {
         )}
       </div>
     </main>
-  );
+  )
 }
 
 // Loading component for Suspense fallback
@@ -447,7 +447,7 @@ function SearchPageLoading() {
         </div>
       </div>
     </main>
-  );
+  )
 }
 
 // Main component with Suspense boundary
@@ -456,5 +456,5 @@ export default function SearchPage() {
     <Suspense fallback={<SearchPageLoading />}>
       <SearchPageContent />
     </Suspense>
-  );
+  )
 }

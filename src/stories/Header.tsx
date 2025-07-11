@@ -1,5 +1,5 @@
-import { Button } from "./Button";
-import "./header.css";
+import { Button } from "./Button"
+import "./header.css"
 
 type User = {
   name: string;
@@ -66,4 +66,4 @@ export const Header = ({
       </div>
     </div>
   </header>
-);
+)

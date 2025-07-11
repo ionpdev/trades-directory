@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "@apollo/client"
 
 export const GET_ALL_TRADESPEOPLE = gql`
   query GetTradespeople {
@@ -9,7 +9,7 @@ export const GET_ALL_TRADESPEOPLE = gql`
       badges
     }
   }
-`;
+`
 
 export const GET_TRADESPEOPLE_BY_SEARCH = gql`
   query GetTradespeopleByTypeAndPostcode($trade: String!, $postcode: String!) {
@@ -20,7 +20,7 @@ export const GET_TRADESPEOPLE_BY_SEARCH = gql`
       badges
     }
   }
-`;
+`
 
 export const GET_TRADESPERSON_BY_ID = gql`
   query GetTradesperson($id: String!) {
@@ -68,4 +68,4 @@ export const GET_TRADESPERSON_BY_ID = gql`
       verified
     }
   }
-`;
+`
