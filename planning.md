@@ -1,17 +1,13 @@
 ### **Architecture & Stack**
 
-- **Next.js (App Router)**: Best modern choice for React apps - allows routing, layouts, and server components if needed.
-- **TypeScript**: Mandatory for maintainability and type safety in a team environment.
-- **Tailwind CSS + SHADCN Components**: Great for rapid UI development and aligns with modern frontend stacks.
-- **Apollo Client (with GraphQL)**: Offers cache, devtools, and strong TypeScript integration.
+- **Next.js (App Router)**
+- **TypeScript**
+- **Tailwind CSS + SHADCN Components**
+- **Apollo Client (with GraphQL)**
 - **MSW**:
   - Mock GraphQL endpoints or REST APIs
-  - Works with both unit tests and dev environments
-  - Makes your app feel "real" with zero backend dependency
 
 ---
-
-## Flow Coverage with Mocking
 
 ### Visitor Flow - **Fully Mockable**
 
@@ -26,11 +22,9 @@
 
 | Feature        | How to Mock                                                     |
 | -------------- | --------------------------------------------------------------- |
-| Login/Register | Store mock auth state in a next-auth with mock adapter          |
-| Leave a Review | Persist to local state or `localStorage`                        |
+| Login/Register | Store mock auth state in `localStorage`                         |
+| Leave a Review | Persist to `localStorage`                                       |
 | Favourites     | Mocked GraphQL mutation and query for favourites, store locally |
-
-Mocking will let us showcase _working flows_ without backend complexity.
 
 ---
 
@@ -42,7 +36,7 @@ Mocking will let us showcase _working flows_ without backend complexity.
 | **E2E Tests**  | Cypress                      |
 | **Storybook**  | Storybook                    |
 
-Storybook to showcase reusable components with mocked GraphQL data, making the components previewable in isolation.
+Storybook to showcase reusable components with mocked GraphQL data, making the components previewable in isolation for quick prototype requirements.
 
 ---
 
